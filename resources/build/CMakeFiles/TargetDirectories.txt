@@ -1,0 +1,9 @@
+/home/kiui/lab.git/resources/build/CMakeFiles/install/strip.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/install/local.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/parse.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/edit_cache.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/radiotap.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/install.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/radiotap_check.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/rebuild_cache.dir
+/home/kiui/lab.git/resources/build/CMakeFiles/list_install_components.dir

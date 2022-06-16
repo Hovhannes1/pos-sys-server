@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/parse.dir/parse.c.o -o parse  -Wl,-rpath,/home/kiui/lab.git/resources/build libradiotap.so 
