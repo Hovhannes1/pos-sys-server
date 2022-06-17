@@ -122,9 +122,9 @@ def start_calibration():
             mac_address=initData['mac_addr']).first()
         if checkMacAdress is None:
             print("Mac address is missing so we add in Calibrating mobile table")
-            calibrate_data = DeviceCalibration(
+            calibrateData = DeviceCalibration(
                 mac_address=initData['mac_addr'], loc_id=secondLoc.id, location=secondLoc)
-            sqlSession.add(calibrate_data)
+            sqlSession.add(calibrateData)
             sqlSession.commit()
 
         allSamples = sqlSession.query(Sample).filter_by(
