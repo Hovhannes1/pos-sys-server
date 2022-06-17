@@ -80,9 +80,9 @@ def rssi():
                 sqlSession.add(Sample_data)
                 sqlSession.commit()
 
-        calibrating_data = sqlSession.query(DeviceCalibration).filter(
+        deviceCalibratData = sqlSession.query(DeviceCalibration).filter(
             DeviceCalibration.mac_address == ap1.mac_address).all()
-        for c_data in calibrating_data:
+        for c_data in deviceCalibratData:
             loc = c_data.location
             allSamples = sqlSession.query(Sample).filter(
                 Sample.source_address == ap1.mac_address).filter(Sample.timestamp >= (time.time() - 1)).all()
@@ -149,9 +149,9 @@ def start_calibration():
 def stop_calibration():
     if request.method == 'GET':
         initData = request.args.to_dict()
-        all_mac = sqlSession.query(DeviceCalibration).filter_by(
+        allMacAddr = sqlSession.query(DeviceCalibration).filter_by(
             mac_address=initData['mac_addr']).all()
-        for mac in all_mac:
+        for mac in allMacAddr:
             print(mac)
             sqlSession.delete(mac)
             sqlSession.commit()
@@ -171,11 +171,11 @@ def rssi_average(arr):
 
 @application.route("/locate", methods=['GET', 'POST'])
 def locate():
-    rssi_arr_samp = []
-    loc_ids = []
+    sampleRSSiArray = []
+    locationIDs = []
     for value in sqlSession.query(FingerprintValue.loc_id).distinct():
-        loc_ids.append(value.loc_id)
-    print(loc_ids)
+        locationIDs.append(value.loc_id)
+    print(locationIDs)
     if request.method == 'GET':
         initData = request.args.to_dict()
         allSamples = sqlSession.query(Sample).filter_by(
@@ -183,22 +183,22 @@ def locate():
         for samp in allSamples:
             diff = time.time() - samp.timestamp
             if diff < 10000000000000:
-                rssi_arr_samp.append(samp.rssi)
+                sampleRSSiArray.append(samp.rssi)
     minRSSI = 9999999
     finalLocId = -1
-    for id in loc_ids:
+    for id in locationIDs:
         tmp = []
         for value in sqlSession.query(FingerprintValue).filter_by(loc_id=id).all():
             tmp.append(value.rssi)
         print(tmp)
-        dist = rssi_dist(rssi_arr_samp, tmp)
+        dist = rssi_dist(sampleRSSiArray, tmp)
         if dist < minRSSI:
             minRSSI = dist
             finalLocId = id
     if finalLocId == -1:
         return "unavailable"
     coordinate = sqlSession.query(Location).filter_by(id=finalLocId).first()
-    print(rssi_arr_samp)
+    print(sampleRSSiArray)
     result = "Location Calculated is :  x:{} y:{} z:{}".format(
         coordinate.x, coordinate.y, coordinate.z)
     return result
