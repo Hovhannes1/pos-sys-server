@@ -1,0 +1,9 @@
+curl "http://127.0.0.1:5000/start_calibration?mac_addr=00:00:00:00:00:12&x=43.2&y=15.2&z=24.1"
+
+curl "http://127.0.0.1:5000/start_calibration?mac_addr=70:FC:8F:5F:E2:A0&x=10.2&y=22.2&z=52.1"
+
+curl http://server_host:server_port/locate?mac_addr=80:2B:F9:0C:92:FF&mac1=E4:34:93:78:03:52&rssi1=-45.2156&&mac2=80:2B:F9:0C:92:FF&rssi2=-54.54892&mac3=80:2B:F9:0C:92:FF&rssi3=-54.54892
+
+curl http://127.0.0.1:5000/locate?mac_addr=80:2B:F9:0C:92:FF
+
+curl http://127.0.0.1:5000/locate?mac_addr=70:FC:8F:5F:E2:A0

@@ -53,10 +53,10 @@ class FingerprintValue(sqlBase):
 
 
 class DeviceCalibration(sqlBase):
-    __tablename__ = "device_calibration"
+    __tablename__ = "calibrating_mobile"
     mac_address = Column(String, primary_key=True)
     loc_id = Column(Integer, ForeignKey("location.id"))
-    location = relationship("Location", backref="device_calibration")
+    location = relationship("Location", backref="calibrating_mobile")
 
 
 @application.route("/rssi", methods=['GET', 'POST'])
@@ -191,6 +191,7 @@ def locate():
         for value in sqlSession.query(FingerprintValue).filter_by(loc_id=id).all():
             tmp.append(value.rssi)
         print(tmp)
+        #print(sampleRSSiArray)
         dist = rssi_dist(sampleRSSiArray, tmp)
         if dist < minRSSI:
             minRSSI = dist
@@ -198,9 +199,11 @@ def locate():
     if finalLocId == -1:
         return "unavailable"
     coordinate = sqlSession.query(Location).filter_by(id=finalLocId).first()
-    print(sampleRSSiArray)
+    #print(coordinate)
+    #print(sampleRSSiArray)
     result = "Location Calculated is :  x:{} y:{} z:{}".format(
         coordinate.x, coordinate.y, coordinate.z)
+    #print(result)
     return result
 
 
